@@ -1,0 +1,10 @@
+﻿{
+    "type": "MainWindow",
+    "title": "LuotiAniTool",
+    "rect": [100, 100, 800, 600],
+    "resizable": false,
+    "backgroundColor": "#ffffff",
+    "subControls": [
+
+    ]
+}

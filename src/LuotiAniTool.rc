@@ -1,0 +1,13 @@
+// LuotiAniTool.rc
+// 资源文件，用于设置Windows应用程序的属性
+
+// 定义SDL3需要的宏
+// #define SDL_MAIN_HANDLED
+
+#ifdef NDEBUG
+// Release模式下使用Windows子系统（无控制台）
+#pragma comment(linker, "/SUBSYSTEM:WINDOWS")
+#else
+// Debug模式下使用控制台子系统
+#pragma comment(linker, "/SUBSYSTEM:CONSOLE")
+#endif
