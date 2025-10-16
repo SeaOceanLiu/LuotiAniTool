@@ -8,13 +8,13 @@ pushd "%PROJECT_ROOT%"
 set PROJECT_ROOT=%CD%
 popd
 
-echo 正在清理构建目录...
+echo ================================
+echo LuotiAniTool 项目重新构建脚本
+echo ================================
+echo.
 
-:: 删除构建目录
-if exist "%PROJECT_ROOT%\build" (
-    echo 删除现有构建目录...
-    rd /s /q "%PROJECT_ROOT%\build"
-)
+echo 正在清理构建目录...
+call "%PROJECT_ROOT%\build_scripts\clean.bat"
 
 echo.
 echo 正在重新构建项目...
