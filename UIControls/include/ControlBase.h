@@ -19,6 +19,8 @@ public:
     virtual int getId(void) const = 0;
     virtual void update(void) = 0;
     virtual void draw(void) = 0;
+    virtual void resized(SRect newRect) = 0;
+    virtual void moved(SRect newRect) = 0;
     virtual bool handleEvent(shared_ptr<Event> event) = 0;  //事件处理，返回值表示是否处理了该事件，true表示处理了，false表示未处理
     // virtual shared_ptr<Control> addControl(shared_ptr<Control> child) = 0;
     virtual void addControl(shared_ptr<Control> child) = 0;
@@ -68,6 +70,8 @@ public:
     ControlImpl& operator=(const ControlImpl& other);
     void update(void) override;
     void draw(void) override;
+    void resized(SRect newRect) override;
+    void moved(SRect newRect) override;
     bool handleEvent(shared_ptr<Event> event) override;
     void addControl(shared_ptr<Control> child) override;
     void removeControl(shared_ptr<Control> child) override;

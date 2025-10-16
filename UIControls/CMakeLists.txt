@@ -5,6 +5,7 @@ add_library(UIControls
     src/Actor.cpp
     src/Bench.cpp
     src/Button.cpp
+    src/ConstDef.cpp
     src/ControlBase.cpp
     src/Dialog.cpp
     src/EventQueue.cpp

@@ -1,5 +1,0 @@
-D:/GitSpace/LuotiAniTool/build/CMakeFiles/DebugTrace.dir
-D:/GitSpace/LuotiAniTool/build/CMakeFiles/LuotiAniTool.dir
-D:/GitSpace/LuotiAniTool/build/CMakeFiles/ALL_BUILD.dir
-D:/GitSpace/LuotiAniTool/build/CMakeFiles/ZERO_CHECK.dir
-D:/GitSpace/LuotiAniTool/build/UIControls/CMakeFiles/UIControls.dir

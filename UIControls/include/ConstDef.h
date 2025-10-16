@@ -14,15 +14,15 @@ struct SDL_Color;
 #define APP_COMPANY "SeaOcean.Ltd."
 #define APP_IDENTIFY "com.seaocean.luotianitool"
 // 主窗体横向像素个数
-#define INITIAL_WIDTH  800
+#define INITIAL_WIDTH  1920
 // 主窗体纵向像素个数
-#define INITIAL_HEIGHT 600
+#define INITIAL_HEIGHT 1080
 // 主窗体初始位置X坐标，SDL_WINDOWPOS_CENTERED表示居中
 #define INITIAL_POSX SDL_WINDOWPOS_CENTERED
 // 主窗体初始位置Y坐标，SDL_WINDOWPOS_CENTERED表示居中
 #define INITIAL_POSY SDL_WINDOWPOS_CENTERED
-#define INITIAL_BG_COLOR SDL_Color{255, 255, 255, 255} // 白色
-#define INITIAL_BORDER_COLOR SDL_Color{0, 0, 0, 255}   // 黑色
+#define INITIAL_BG_COLOR SDL_Color{23, 23, 24, 255}
+#define INITIAL_BORDER_COLOR SDL_Color{68, 68, 75, 255}   // 黑色
 // 在这里定义窗口特性标志
 #define WINDOW_FLAG (SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY)
 // 是否开启垂直同步，0表示不启用垂直同步，1表示启用垂直同步

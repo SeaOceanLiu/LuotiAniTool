@@ -1,11 +1,10 @@
 ﻿#include "Bench.h"
 
-SDL_EnumerationResult callback(void *userdata, const char *dirname, const char *fname) {
-    SDL_Log("  - %s (%s)", fname, dirname);
-    return SDL_ENUM_CONTINUE;
-}
-
 void Bench::initial(void){
+    setBGColor(INITIAL_BG_COLOR);
+    setBorderColor(INITIAL_BORDER_COLOR);
+    setTransparent(false);
+
     m_isInitialed = true;
     SDL_Log("Loading finished, waiting user starting game................................");
 }
@@ -24,7 +23,7 @@ Bench::Bench(Control *parent, SRect rect, SDL_Renderer *renderer, float xScale, 
 
     SDL_Log("Loading resources.....................................");
     // 将资源加载到内存中
-    ResourceLoader::getInstance()->loadConfig();
+    // ResourceLoader::getInstance()->loadConfig();
 }
 
 void Bench::inputControl(shared_ptr<Event> event) {
@@ -65,15 +64,19 @@ void Bench::repeatTrigger(void){
     }
 }
 void Bench::update() {
+    if (!m_enable) return;
+
     if (m_lastAction != nullptr){
         repeatTrigger();
     }
     Panel::update();
 }
 void Bench::draw(void){
-    drawCenteredRectangle(getRenderer(), (int)m_rect.width, (int)m_rect.height);
+    if (!m_visible) return;
     // 绘制子控件
     Panel::draw();
+
+    drawCenteredRectangle(getRenderer(), (int)m_rect.width, (int)m_rect.height);
 }
 
 SDL_AppResult Bench::isExiting(void) {

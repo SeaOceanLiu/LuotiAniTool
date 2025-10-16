@@ -10,6 +10,8 @@ LuotiAni is an animation library runs on SDL3, similar to Lottie. It also uses J
 - [build_scripts/build.ps1](build_scripts/build.ps1) - PowerShell版本的构建脚本，自动检测编译环境
 - [build_scripts/build_with_generator.bat](build_scripts/build_with_generator.bat) - 指定生成器的构建脚本
 - [build_scripts/build_with_generator.ps1](build_scripts/build_with_generator.ps1) - PowerShell版本的指定生成器构建脚本
+- [build_scripts/clean.bat](build_scripts/clean.bat) - 清理所有编译中间结果和最终结果
+- [build_scripts/clean.ps1](build_scripts/clean.ps1) - PowerShell版本的清理脚本
 
 ## DebugTrace 子模块
 
@@ -71,7 +73,13 @@ LuotiAni is an animation library runs on SDL3, similar to Lottie. It also uses J
    build_scripts\build_with_generator.bat mingw Release
    ```
 
-3. **手动使用CMake**：
+3. **清理构建产物**：
+   ```
+   build_scripts\clean.bat
+   build_scripts\clean.ps1
+   ```
+
+4. **手动使用CMake**：
    ```
    mkdir build
    cd build

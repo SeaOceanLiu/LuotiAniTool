@@ -146,6 +146,10 @@ shared_ptr<Resource> ResourceLoader::getResource(string& resourceId){
 void ResourceLoader::loadConfigFile(fs::path configPath){
     SDL_Log("Open config file: %s", configPath.string().c_str());
 
+    return;
+
+
+
     // 将资源版本号初始化为空，避免打开文件失败时获得早前的资源版本号
     m_resourceVersion = "";
     SDL_IOStream *jsonFIleStream = SDL_IOFromFile(configPath.string().c_str(), "r");

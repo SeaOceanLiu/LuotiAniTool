@@ -80,6 +80,14 @@ void ControlImpl::draw(void){
     }
 }
 
+void ControlImpl::resized(SRect newRect){
+    m_rect.width = newRect.width;
+    m_rect.height = newRect.height;
+}
+void ControlImpl::moved(SRect newRect){
+    m_rect.left = newRect.left;
+    m_rect.top = newRect.top;
+}
 //事件处理，返回值表示是否处理了该事件，true表示处理了，false表示未处理
 bool ControlImpl::handleEvent(shared_ptr<Event> event){
     // 检查当前控件是否可见且启用

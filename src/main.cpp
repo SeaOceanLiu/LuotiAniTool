@@ -133,6 +133,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 
         case SDL_EVENT_WINDOW_RESIZED:
             MainWindow::handleWindowEvent(event->window);
+            BENCH->resized({0, 0, (float)event->window.data1, (float)event->window.data2});
             break;
 
         case SDL_EVENT_WINDOW_MOVED:
@@ -153,6 +154,10 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
     BENCH->update();
+
+    /* clear the window to the draw color. */
+    SDL_SetRenderDrawColor(MainWindow::getInstance()->getRenderer(), 255, 0, 0, 255);
+    SDL_RenderClear(MainWindow::getInstance()->getRenderer());
 
     BENCH->draw();
 
