@@ -1,8 +1,10 @@
-﻿#ifndef ControlH
-#define ControlH
+#ifndef ControlBaseH
+#define ControlBaseH
+#include <memory>
 #include <vector>
 #include <SDL3/SDL.h>
 #include "MainWindow.h"
+#include "Utility.h"
 #include "EventQueue.h"
 
 using namespace std;
@@ -104,4 +106,4 @@ public:
         }
     }
 };
-#endif  // ControlH
+#endif  // ControlBaseH

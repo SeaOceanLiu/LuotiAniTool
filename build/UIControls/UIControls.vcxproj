@@ -277,8 +277,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Actor.cpp" />
+    <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Bench.cpp" />
     <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Button.cpp" />
-    <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Control.cpp" />
+    <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\ControlBase.cpp" />
     <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Dialog.cpp" />
     <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\EventQueue.cpp" />
     <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Label.cpp" />

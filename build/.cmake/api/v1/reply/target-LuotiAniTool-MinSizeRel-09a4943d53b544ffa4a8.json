@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "RelWithDebInfo/LuotiAniTool.exe"
+			"path" : "MinSizeRel/LuotiAniTool.exe"
 		},
 		{
-			"path" : "RelWithDebInfo/LuotiAniTool.pdb"
+			"path" : "MinSizeRel/LuotiAniTool.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -61,7 +61,7 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 47,
+				"line" : 46,
 				"parent" : 0
 			},
 			{
@@ -78,7 +78,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -std:c++17 -MD"
+					"fragment" : "/DWIN32 /D_WINDOWS /EHsc /O1 /Ob1 /DNDEBUG -std:c++17 -MD"
 				}
 			],
 			"defines" : 
@@ -197,11 +197,11 @@
 	[
 		{
 			"backtrace" : 3,
-			"id" : "UIControls::@6fd9fded79d43f535960"
+			"id" : "DebugTrace::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 3,
-			"id" : "DebugTrace::@6890427a1f51a3e7e1df"
+			"id" : "UIControls::@6fd9fded79d43f535960"
 		},
 		{
 			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
@@ -213,11 +213,11 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "/DWIN32 /D_WINDOWS /EHsc /Zi /O2 /Ob1 /DNDEBUG -MD",
+				"fragment" : "/DWIN32 /D_WINDOWS /EHsc /O1 /Ob1 /DNDEBUG -MD",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "/machine:x64 /debug /INCREMENTAL /subsystem:console",
+				"fragment" : "/machine:x64 /INCREMENTAL:NO /subsystem:console",
 				"role" : "flags"
 			},
 			{
@@ -227,12 +227,12 @@
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "RelWithDebInfo\\DebugTrace.lib",
+				"fragment" : "MinSizeRel\\DebugTrace.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "UIControls\\RelWithDebInfo\\UIControls.lib",
+				"fragment" : "UIControls\\MinSizeRel\\UIControls.lib",
 				"role" : "libraries"
 			},
 			{

@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <SDL3/SDL.h>
 
-#include "Control.h"
+#include "ControlBase.h"
 
 namespace fs = std::filesystem;
 

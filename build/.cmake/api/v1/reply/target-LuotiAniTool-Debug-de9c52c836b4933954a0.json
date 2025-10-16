@@ -176,11 +176,11 @@
 	[
 		{
 			"backtrace" : 3,
-			"id" : "UIControls::@6fd9fded79d43f535960"
+			"id" : "DebugTrace::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 3,
-			"id" : "DebugTrace::@6890427a1f51a3e7e1df"
+			"id" : "UIControls::@6fd9fded79d43f535960"
 		},
 		{
 			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"

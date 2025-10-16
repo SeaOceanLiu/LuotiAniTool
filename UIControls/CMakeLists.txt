@@ -3,8 +3,9 @@
 # 添加UIControls库
 add_library(UIControls
     src/Actor.cpp
+    src/Bench.cpp
     src/Button.cpp
-    src/Control.cpp
+    src/ControlBase.cpp
     src/Dialog.cpp
     src/EventQueue.cpp
     src/Label.cpp

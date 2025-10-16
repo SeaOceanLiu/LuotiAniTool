@@ -204,45 +204,36 @@ bool Label::handleEvent(shared_ptr<Event> event){
     return false;
 }
 
-// int Label::getId(void) const{
-//     return m_id;
-// }
-
 SRect Label::getHotRect(void) const{
     return m_hotRect;
 }
 
 /*********************************************************for Builder mode**********************************************************/
 
-Label& Label::setNormalStateColor(SDL_Color color){
+void Label::setNormalStateColor(SDL_Color color){
     m_normalStateColor = color;
-    return *this;
 }
-Label& Label::setHoverStateColor(SDL_Color color){
+void Label::setHoverStateColor(SDL_Color color){
     m_hoverStateColor = color;
-    return *this;
 }
-Label& Label::setPressedStateColor(SDL_Color color){
+void Label::setPressedStateColor(SDL_Color color){
     m_pressedStateColor = color;
-    return *this;
 }
-Label& Label::setCaption(string caption){
+void Label::setCaption(string caption){
     m_caption = caption;
 
-    if (m_font == nullptr || m_textEngin == nullptr) return *this;
+    if (m_font == nullptr || m_textEngin == nullptr) return;
 
     if (m_ttfText == nullptr) {
         m_ttfText = TTF_CreateText(m_textEngin, m_font, caption.c_str(), caption.length());
         if (m_ttfText == nullptr) {
             SDL_Log("Failed to create static text: %s", SDL_GetError());
             throw "Failed to create static text: %s", SDL_GetError();
-            return *this;
         }
     } else {
         if(!TTF_SetTextString(m_ttfText, caption.c_str(), caption.length())) {
             SDL_Log("Failed to set text string: %s", SDL_GetError());
             throw "Failed to set text string: %s", SDL_GetError();
-            return *this;
         }
     }
 
@@ -250,20 +241,17 @@ Label& Label::setCaption(string caption){
     if (!TTF_GetTextSize(m_ttfText, &width, &height)){
         SDL_Log("Failed to get text size: %s", SDL_GetError());
         throw "Failed to get text size: %s", SDL_GetError();
-        return *this;
     }
     m_textSize = {static_cast<float>(width / getScaleXX()), static_cast<float>(height / getScaleYY())};  // 除以倍率获得原始大小，后续用来计算对齐时才能正确计算;
 
     // 重新计算对齐位置
     setAlignmentMode(m_AlignmentMode);
-    return *this;
 }
-Label& Label::setFont(FontName fontName){
+void Label::setFont(FontName fontName){
     m_fontName = fontName;
     m_fontFile = fs::path(ResourceLoader::m_fontFiles[fontName]);
-    return *this;
 }
-Label& Label::setAlignmentMode(AlignmentMode Alignment){
+void Label::setAlignmentMode(AlignmentMode Alignment){
     m_AlignmentMode = Alignment;
     switch (m_AlignmentMode) {
         case AlignmentMode::AM_TOP_CENTER:
@@ -298,71 +286,44 @@ Label& Label::setAlignmentMode(AlignmentMode Alignment){
             break;
     }
     m_hotRect = {m_translatedPos.x, m_translatedPos.y, m_textSize.width, m_textSize.height};
-    return *this;
 }
-Label& Label::setFontSize(int fontSize){
-    if (fontSize == m_fontSize) return *this;
+void Label::setFontSize(int fontSize){
+    if (fontSize == m_fontSize) return;
     m_fontSize = fontSize;
 
-    if (m_font == nullptr) return *this;
+    if (m_font == nullptr) return;
     if(!TTF_SetFontSize(m_font, fontSize * getScaleXX())) {
         SDL_Log("Failed to set font size: %s", SDL_GetError());
         throw "Failed to set font size: %s", SDL_GetError();
-        return *this;
+        return;
     }
 
     // Todo: 下面需要对已经生成的参数重新计算一遍
     setCaption(m_caption);
-    return *this;
 }
-Label& Label::setShadow(bool enabled){
+void Label::setShadow(bool enabled){
     m_shadowEnabled = enabled;
-    return *this;
 }
-Label& Label::setShadowColor(SDL_Color color){
+void Label::setShadowColor(SDL_Color color){
     m_shadowColor = color;
-    return *this;
 }
-Label& Label::setShadowOffset(SPoint offset){
+void Label::setShadowOffset(SPoint offset){
     m_shadowOffset = offset;
-    return *this;
 }
-Label& Label::setOnClick(OnClickHandler handler){
+void Label::setOnClick(OnClickHandler handler){
     m_onClick = handler;
-    return *this;
 }
-// Label& Label::setId(int id){
+// void Label::setId(int id){
 //     m_id = id;
-//     return *this;
+//     return;
 // }
-Label& Label::SetFontStyle(TTF_FontStyleFlags fontStyle){
+void Label::SetFontStyle(TTF_FontStyleFlags fontStyle){
     m_fontStyle = fontStyle;
 
-    if (m_font == nullptr) return *this;
+    if (m_font == nullptr) return;
 
     TTF_SetFontStyle(m_font, fontStyle); // Todo: 下面需要对已经生成的参数重新计算一遍
     setCaption(m_caption);
-    return *this;
-}
-
-shared_ptr<Label> Label::build(void){
-    auto newLabel = make_shared<Label>(this->getParent(), m_rect, m_xScale, m_yScale);
-    newLabel->setFontSize(m_fontSize);
-    newLabel->setFont(m_fontName);
-    newLabel->loadFromResource(m_fontFile.string());
-    newLabel->setNormalStateColor(m_normalStateColor);
-    newLabel->setHoverStateColor(m_hoverStateColor);
-    newLabel->setPressedStateColor(m_pressedStateColor);
-    newLabel->setCaption(m_caption);
-    newLabel->SetFontStyle(m_fontStyle);
-    newLabel->setAlignmentMode(m_AlignmentMode);
-    newLabel->setFontSize(m_fontSize);
-    newLabel->setShadow(m_shadowEnabled);
-    newLabel->setShadowColor(m_shadowColor);
-    newLabel->setShadowOffset(m_shadowOffset);
-    newLabel->setOnClick(m_onClick);
-    newLabel->setId(m_id);
-    return newLabel;
 }
 
 LabelBuilder::LabelBuilder(Control *parent, SRect rect, float xScale, float yScale):

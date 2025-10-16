@@ -4,6 +4,7 @@
 #include <SDL3_image/SDL_image.h>
 
 #include "Material.h"
+#include "ResourceLoader.h"
 
 class Actor: public Material{
 friend class ActorBuilder;

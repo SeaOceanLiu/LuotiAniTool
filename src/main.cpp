@@ -4,6 +4,7 @@
 #include <iostream>
 #include "DebugTrace.h"
 #include "MainWindow.h"
+#include "Bench.h"
 
 void debugTraceOutput(void *userdata, int category, SDL_LogPriority priority, const char *message)
 {
@@ -31,6 +32,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 
     // MainWindow::getInstance()必须在SDL_Init之后，TTF_Init之前调用
     SSize displaySize = MAINWIN->getDisplaySize();
+    BENCH->initial();    // 初始化Bench单例，创建Bench工作台，Todo: 从配置文件中读取窗体配置
 
     DEBUG_STREAM << "SDL3 Resizable Window Example" << std::endl;
     DEBUG_STREAM << "Instructions:" << std::endl;
@@ -77,12 +79,12 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
                     break;
             }
             if (gameEvent != nullptr) {
-                MAINWIN->inputControl(gameEvent);
+                BENCH->inputControl(gameEvent);
             }
         case SDL_EVENT_MOUSE_MOTION:        /**< Mouse moved */
             pos = make_shared<SPoint>(event->motion.x, event->motion.y);
             gameEvent = make_shared<Event>(EventName::MOUSE_MOVING, pos);
-            MAINWIN->inputControl(gameEvent);
+            BENCH->inputControl(gameEvent);
             break;
         case SDL_EVENT_MOUSE_BUTTON_DOWN:   /**< Mouse button pressed */
             pos = make_shared<SPoint>(event->button.x, event->button.y);
@@ -101,7 +103,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
                     break;
             }
             if (gameEvent != nullptr) {
-                MAINWIN->inputControl(gameEvent);
+                BENCH->inputControl(gameEvent);
             }
             break;
         case SDL_EVENT_MOUSE_BUTTON_UP:     /**< Mouse button released */
@@ -121,12 +123,12 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
                     break;
             }
             if (gameEvent != nullptr) {
-                MAINWIN->inputControl(gameEvent);
+                BENCH->inputControl(gameEvent);
             }
             break;
 
         case SDL_EVENT_KEY_DOWN:
-            MAINWIN->inputControl(gameEvent);
+            BENCH->inputControl(gameEvent);
             break;
 
         case SDL_EVENT_WINDOW_RESIZED:
@@ -150,9 +152,9 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 /* This function runs once per frame, and is the heart of the program. */
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
-    MAINWIN->update();
+    BENCH->update();
 
-    MAINWIN->draw();
+    BENCH->draw();
 
     // Present rendering
     SDL_RenderPresent(GET_RENDERER);

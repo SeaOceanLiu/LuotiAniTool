@@ -398,6 +398,18 @@
 			"value" : "/debug /INCREMENTAL"
 		},
 		{
+			"name" : "CMAKE_EXPORT_COMPILE_COMMANDS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "No help, variable specified on the command line."
+				}
+			],
+			"type" : "BOOL",
+			"value" : "TRUE"
+		},
+		{
 			"name" : "CMAKE_EXTRA_GENERATOR",
 			"properties" : 
 			[
@@ -603,7 +615,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "CMAKE_MT-NOTFOUND"
+			"value" : "D:/Windows Kits/10/bin/10.0.26100.0/x86/mt.exe"
 		},
 		{
 			"name" : "CMAKE_NUMBER_OF_MAKEFILES",
@@ -691,7 +703,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "D:/Program Files (x86)/CBuilder12/bin/rc.exe"
+			"value" : "D:/Windows Kits/10/bin/10.0.26100.0/x86/rc.exe"
 		},
 		{
 			"name" : "CMAKE_RC_COMPILER_WORKS",

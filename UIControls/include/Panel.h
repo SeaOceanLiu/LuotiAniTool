@@ -4,6 +4,7 @@
 #include <functional>
 #include <vector>
 #include <unordered_map>
+#include "ControlBase.h"
 #include "Actor.h"
 
 using namespace std;

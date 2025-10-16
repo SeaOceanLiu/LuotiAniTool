@@ -4,10 +4,13 @@
     <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Bench.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Control.cpp">
+    <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\ControlBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\GitSpace\LuotiAniTool\UIControls\src\Dialog.cpp">

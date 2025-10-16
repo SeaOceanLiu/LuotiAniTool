@@ -1,4 +1,4 @@
-﻿#include "Control.h"
+#include "ControlBase.h"
 ControlImpl::ControlImpl(Control *parent, float xScale, float yScale):
     // m_weakThis(this),
     // m_sharedThis(nullptr),
@@ -97,12 +97,12 @@ bool ControlImpl::handleEvent(shared_ptr<Event> event){
     return false;
 }
 
-Control& ControlImpl::addControl(shared_ptr<Control> child){
-    if (child == nullptr) return *this;
+void ControlImpl::addControl(shared_ptr<Control> child){
+    if (child == nullptr) return;
 
     // 如果控件已经存在，则直接返回
     if (std::find(m_children.begin(), m_children.end(), child) != m_children.end()){
-        return *this;
+        return;
     }
     m_children.push_back(child);
 
@@ -110,8 +110,6 @@ Control& ControlImpl::addControl(shared_ptr<Control> child){
     child->setRenderer(getRenderer());
     child->setScaleX(m_xScale);
     child->setScaleY(m_yScale);
-
-    return *this;
 }
 
 void ControlImpl::removeControl(shared_ptr<Control> child){

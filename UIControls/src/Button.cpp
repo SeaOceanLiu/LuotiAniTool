@@ -7,7 +7,6 @@ Button::Button(Control *parent, SRect rect, float xScale, float yScale):
     m_hoverActor(nullptr),
     m_pressedActor(nullptr),
     m_caption(nullptr),
-    m_animation(nullptr),
     m_luotiAni(nullptr),
     m_isTransparent(false),
     // m_id(INT_MAX),
@@ -18,11 +17,6 @@ Button::Button(Control *parent, SRect rect, float xScale, float yScale):
 
 void Button::update(void){
     if (!m_enable) return;
-
-    // 如果有动画，这里需要更新动画
-    if(m_animation != nullptr){
-        m_animation->update();
-    }
 
     // 如果有定时器，这里需要更新定时器
 
@@ -83,9 +77,6 @@ void Button::draw(void){
     }
 
     // 4. 绘制动画
-    if(m_animation != nullptr){
-        m_animation->draw();
-    }
     if(m_luotiAni != nullptr){
         m_luotiAni->draw();
     }
@@ -192,21 +183,6 @@ void Button::setCaptionSize(float size){
         m_caption->setFontSize((int)m_captionSize);
     }
 }
-void Button::setAnimation(shared_ptr<Animation> animation){
-    m_animation = animation;
-
-    if (m_animation != nullptr){
-        // 设置动画的父控件为当前控件
-        m_animation->setParent(this);
-        for(auto frame : m_animation->getFrames()){
-            frame->setParent(this);
-            for (auto actor : frame->getActors()){
-                actor->setParent(this);
-            }
-        }
-        m_animation->resume();
-    }
-}
 void Button::setLuotiAni(shared_ptr<LuotiAni>luotiAni){
     m_luotiAni = luotiAni;
     if (m_luotiAni != nullptr){
@@ -245,10 +221,6 @@ ButtonBuilder& ButtonBuilder::setCaption(string caption){
 }
 ButtonBuilder& ButtonBuilder::setCaptionSize(float size){
     m_button->setCaptionSize(size);
-    return *this;
-}
-ButtonBuilder& ButtonBuilder::setAnimation(shared_ptr<Animation> animation){
-    m_button->setAnimation(animation);
     return *this;
 }
 ButtonBuilder& ButtonBuilder::setLuotiAni(shared_ptr<LuotiAni>luotiAni){

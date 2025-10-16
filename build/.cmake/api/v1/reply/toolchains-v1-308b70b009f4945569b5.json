@@ -60,7 +60,7 @@
 			"compiler" : 
 			{
 				"implicit" : {},
-				"path" : "D:/Program Files (x86)/CBuilder12/bin/rc.exe"
+				"path" : "D:/Windows Kits/10/bin/10.0.26100.0/x86/rc.exe"
 			},
 			"language" : "RC",
 			"sourceFileExtensions" : 

@@ -17,13 +17,13 @@
 	"dependencies" : 
 	[
 		{
-			"id" : "UIControls::@6fd9fded79d43f535960"
+			"id" : "DebugTrace::@6890427a1f51a3e7e1df"
 		},
 		{
 			"id" : "LuotiAniTool::@6890427a1f51a3e7e1df"
 		},
 		{
-			"id" : "DebugTrace::@6890427a1f51a3e7e1df"
+			"id" : "UIControls::@6fd9fded79d43f535960"
 		},
 		{
 			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"

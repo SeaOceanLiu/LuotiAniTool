@@ -1,6 +1,7 @@
 ﻿#ifndef ButtonH
 #define ButtonH
 #include <functional>
+#include "ConstDef.h"
 #include "Actor.h"
 #include "Label.h"
 #include "LuotiAni.h"
@@ -19,7 +20,6 @@ private:
     shared_ptr<Actor> m_hoverActor;
     shared_ptr<Actor> m_pressedActor;
     shared_ptr<Label> m_caption;
-    shared_ptr<Animation> m_animation;
     shared_ptr<LuotiAni>m_luotiAni;
 
     string m_captionText;
@@ -40,7 +40,6 @@ public:
     void setBtnPressedStateActor(shared_ptr<Actor> actor);
     void setCaption(string caption);
     void setCaptionSize(float size);
-    void setAnimation(shared_ptr<Animation> animation);
     void setLuotiAni(shared_ptr<LuotiAni>luotiAni);
     void setOnClick(OnClickHandler onClick);
     void setTransparent(bool isTransparent);
@@ -56,7 +55,6 @@ public:
     ButtonBuilder& setBtnPressedStateActor(shared_ptr<Actor> actor);
     ButtonBuilder& setCaption(string caption);
     ButtonBuilder& setCaptionSize(float size);
-    ButtonBuilder& setAnimation(shared_ptr<Animation> animation);
     ButtonBuilder& setLuotiAni(shared_ptr<LuotiAni> luotiAni);
     ButtonBuilder& addControl(shared_ptr<Control> child);
     ButtonBuilder& setOnClick(Button::OnClickHandler onClick);

@@ -4,7 +4,8 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <unordered_map>
 #include <string>
-#include "Control.h"
+#include "ConstDef.h"
+#include "ControlBase.h"
 #include "ResourceLoader.h"
 
 // #include "FontSuite.h"
@@ -72,22 +73,20 @@ public:
     // int getId(void) const;
     SRect getHotRect(void) const;
 
-    Label& setNormalStateColor(SDL_Color color);
-    Label& setHoverStateColor(SDL_Color color);
-    Label& setPressedStateColor(SDL_Color color);
-    Label& setCaption(string caption);
-    Label& setFont(FontName fontName);
-    Label& setAlignmentMode(AlignmentMode Alignment);
-    Label& setFontSize(int fontSize);
-    Label& setShadow(bool enabled);
-    Label& setShadowColor(SDL_Color color);
-    Label& setShadowOffset(SPoint offset);
-    Label& setOnClick(OnClickHandler handler);
-    // Label& setId(int id);
+    void setNormalStateColor(SDL_Color color);
+    void setHoverStateColor(SDL_Color color);
+    void setPressedStateColor(SDL_Color color);
+    void setCaption(string caption);
+    void setFont(FontName fontName);
+    void setAlignmentMode(AlignmentMode Alignment);
+    void setFontSize(int fontSize);
+    void setShadow(bool enabled);
+    void setShadowColor(SDL_Color color);
+    void setShadowOffset(SPoint offset);
+    void setOnClick(OnClickHandler handler);
+    // void setId(int id);
 
-    Label& SetFontStyle(TTF_FontStyleFlags fontStyle);
-
-    shared_ptr<Label> build(void);
+    void SetFontStyle(TTF_FontStyleFlags fontStyle);
 };
 
 class LabelBuilder {

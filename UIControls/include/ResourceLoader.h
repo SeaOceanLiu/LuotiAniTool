@@ -1,4 +1,4 @@
-﻿﻿#ifndef ResourceLoaderH
+﻿#ifndef ResourceLoaderH
 #define ResourceLoaderH
 
 #include <unordered_map>
@@ -6,6 +6,7 @@
 #include <SDL3/SDL.h>
 
 #include "nlohmann/json.hpp"
+#include "ConstDef.h"
 
 using namespace std;
 using json = nlohmann::json;
