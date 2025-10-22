@@ -66,13 +66,6 @@ bool MenuItem::handleEvent(shared_ptr<Event> event)
         if (drawRect.contains(pos->x, pos->y)) {
             // 鼠标在菜单项内
             switch(event->m_eventName) {
-                case EventName::MOUSE_MOVING:
-                    // 设置悬停状态
-                    setState(ButtonState::Hover);
-                    if (m_hasSubMenu) {
-                        showSubMenu();
-                    }
-                    break;
                 case EventName::MOUSE_LBUTTON_DOWN:
                     // 设置按下状态
                     setState(ButtonState::Pressed);
@@ -89,7 +82,6 @@ bool MenuItem::handleEvent(shared_ptr<Event> event)
             return true;
         } else {
             // 鼠标不在菜单项内
-            setState(ButtonState::Normal);
             if (!m_hasSubMenu) {
                 hideSubMenu();
             }
@@ -573,10 +565,6 @@ bool MenuBar::handleEvent(shared_ptr<Event> event)
                             m_activeMenu->hideSubMenu();
                         }
                         m_activeMenu = menu;
-                        // 如果已经有菜单面板显示，则切换到新的菜单面板
-                        if (menu->isSubMenuVisible()) {
-                            menu->showSubMenu(nullptr);
-                        }
                     }
                     break;
                 }
