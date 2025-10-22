@@ -104,6 +104,11 @@ void MenuItem::setType(MenuItemType type)
     m_type = type;
 }
 
+MenuItemType MenuItem::getType(void) const
+{
+    return m_type;
+}
+
 void MenuItem::setShortcut(string shortcut)
 {
     m_shortcut = shortcut;
@@ -278,7 +283,8 @@ shared_ptr<MenuItem> MenuItemBuilder::build(void)
 MainMenu::MainMenu(Control *parent, SRect rect, float xScale, float yScale)
     : Button(parent, rect, xScale, yScale),
     m_maxSubMenuWidth(20.f),
-    m_subMenuPanel(nullptr)
+    m_subMenuPanel(nullptr),
+    m_activeMenuItem(nullptr)
 {
     setNormalStateBGColor(ConstDef::MENU_NORMAL_COLOR);
     setHoverStateBGColor(ConstDef::MENU_HOVER_COLOR);
@@ -314,14 +320,48 @@ bool MainMenu::handleEvent(shared_ptr<Event> event)
         return true;
     }
 
-    // 处理位置事件
+    // 处理位置事件，用于管理活动菜单项
     if (EventQueue::isPositionEvent(event->m_eventName)) {
         shared_ptr<SPoint> pos = any_cast<shared_ptr<SPoint>>(event->m_eventParam);
-        SRect drawRect = getDrawRect(); // 获取当前控件的绘制区域
 
-        if (!drawRect.contains(pos->x, pos->y)) {
-            if (m_subMenuPanel) {
-                m_subMenuPanel->hide();
+        // 检查鼠标是否在子菜单面板内
+        if (m_subMenuPanel && m_subMenuPanel->getEnable() && m_subMenuPanel->getVisible()) {
+            SRect subMenuRect = m_subMenuPanel->getDrawRect();
+            if (subMenuRect.contains(pos->x, pos->y)) {
+                // 鼠标在子菜单面板内，查找当前悬停的菜单项
+                shared_ptr<MenuItem> hoveredItem = nullptr;
+
+                for (auto& menuItem : m_menuItems) {
+                    if (menuItem->getType() == MenuItemType::Separator) {
+                        continue; // 跳过分隔符
+                    }
+
+                    SRect itemRect = menuItem->getDrawRect();
+                    if (itemRect.contains(pos->x, pos->y)) {
+                        hoveredItem = menuItem;
+                        break;
+                    }
+                }
+
+                // 更新活动菜单项
+                if (hoveredItem != m_activeMenuItem) {
+                    // 清除前一个活动菜单项的状态
+                    if (m_activeMenuItem) {
+                        m_activeMenuItem->setState(ButtonState::Normal);
+                    }
+
+                    // 设置新的活动菜单项
+                    m_activeMenuItem = hoveredItem;
+                    if (m_activeMenuItem) {
+                        m_activeMenuItem->setState(ButtonState::Hover);
+                    }
+                }
+            } else {
+                // 鼠标不在子菜单面板内，清除活动菜单项
+                if (m_activeMenuItem) {
+                    m_activeMenuItem->setState(ButtonState::Normal);
+                    m_activeMenuItem = nullptr;
+                }
             }
         }
     }

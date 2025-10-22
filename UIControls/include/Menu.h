@@ -35,6 +35,7 @@ public:
     bool handleEvent(shared_ptr<Event> event) override;
 
     void setType(MenuItemType type);
+    MenuItemType getType(void) const;
     void setShortcut(string shortcut);
     void setOnClick(OnClickHandler onClick);
 
@@ -103,6 +104,7 @@ private:
     float m_maxSubMenuWidth;
     shared_ptr<Panel> m_subMenuPanel;
     vector<shared_ptr<MenuItem>> m_menuItems;
+    shared_ptr<MenuItem> m_activeMenuItem;
 };
 
 // MainMenuBuilder类定义
