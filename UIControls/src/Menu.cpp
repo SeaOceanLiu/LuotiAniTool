@@ -66,6 +66,13 @@ bool MenuItem::handleEvent(shared_ptr<Event> event)
         if (drawRect.contains(pos->x, pos->y)) {
             // 鼠标在菜单项内
             switch(event->m_eventName) {
+                case EventName::MOUSE_MOVING:
+                    // 设置悬停状态
+                    setState(ButtonState::Hover);
+                    if (m_hasSubMenu) {
+                        showSubMenu();
+                    }
+                    break;
                 case EventName::MOUSE_LBUTTON_DOWN:
                     // 设置按下状态
                     setState(ButtonState::Pressed);
@@ -82,6 +89,7 @@ bool MenuItem::handleEvent(shared_ptr<Event> event)
             return true;
         } else {
             // 鼠标不在菜单项内
+            setState(ButtonState::Normal);
             if (!m_hasSubMenu) {
                 hideSubMenu();
             }
@@ -376,6 +384,7 @@ void MainMenu::addMenuItem(shared_ptr<MenuItem> menuItem)
                     .setBorderColor(SDL_Color{68, 68, 75, 255})
                     .setTransparent(false)
                     .build();
+    m_subMenuPanel->hide(); // 默认隐藏菜单面板
     for (size_t i = 0; i < m_menuItems.size(); i++) {
         m_menuItems[i]->setRect(SRect{0, i * ConstDef::MENU_BAR_HEIGHT, m_maxSubMenuWidth, ConstDef::MENU_BAR_HEIGHT});
         m_subMenuPanel->addControl(m_menuItems[i]);
@@ -564,8 +573,10 @@ bool MenuBar::handleEvent(shared_ptr<Event> event)
                             m_activeMenu->hideSubMenu();
                         }
                         m_activeMenu = menu;
-                        // 只有当鼠标点击时才显示菜单面板，而不是悬停就显示
-                        // menu->showSubMenu(nullptr); // 注释掉这行，让点击事件处理显示
+                        // 如果已经有菜单面板显示，则切换到新的菜单面板
+                        if (menu->isSubMenuVisible()) {
+                            menu->showSubMenu(nullptr);
+                        }
                     }
                     break;
                 }
