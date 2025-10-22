@@ -250,6 +250,10 @@ void Button::setTransparent(bool isTransparent){
     m_isTransparent = isTransparent;
 }
 
+void Button::setState(ButtonState state){
+    m_state = state;
+}
+
 
 ButtonBuilder::ButtonBuilder(Control *parent, SRect rect, float xScale, float yScale):
     m_button(nullptr)

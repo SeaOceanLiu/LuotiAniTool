@@ -67,11 +67,15 @@ bool MenuItem::handleEvent(shared_ptr<Event> event)
             // 鼠标在菜单项内
             switch(event->m_eventName) {
                 case EventName::MOUSE_MOVING:
+                    // 设置悬停状态
+                    setState(ButtonState::Hover);
                     if (m_hasSubMenu) {
                         showSubMenu();
                     }
                     break;
                 case EventName::MOUSE_LBUTTON_DOWN:
+                    // 设置按下状态
+                    setState(ButtonState::Pressed);
                     if (m_onClick != nullptr) {
                         m_onClick(dynamic_pointer_cast<MenuItem>(this->getThis()));
                     }
@@ -84,6 +88,8 @@ bool MenuItem::handleEvent(shared_ptr<Event> event)
             }
             return true;
         } else {
+            // 鼠标不在菜单项内
+            setState(ButtonState::Normal);
             if (!m_hasSubMenu) {
                 hideSubMenu();
             }
@@ -392,6 +398,18 @@ bool MainMenu::isSubMenuVisible(void)
     return m_subMenuPanel && m_subMenuPanel->getEnable() && m_subMenuPanel->getRect().height > 0;
 }
 
+void MainMenu::hideSubMenu(void)
+{
+    if (m_subMenuPanel) {
+        m_subMenuPanel->hide();
+    }
+}
+
+shared_ptr<Panel> MainMenu::getSubMenuPanel(void)
+{
+    return m_subMenuPanel;
+}
+
 
 
 // MainMenuBuilder 实现
@@ -495,6 +513,42 @@ void MenuBar::draw(void)
 bool MenuBar::handleEvent(shared_ptr<Event> event)
 {
     if (!m_enable || !m_visible) return false;
+
+    // 处理位置事件，用于管理活动菜单
+    if (EventQueue::isPositionEvent(event->m_eventName)) {
+        shared_ptr<SPoint> pos = any_cast<shared_ptr<SPoint>>(event->m_eventParam);
+
+        // 检查鼠标是否在菜单栏内
+        SRect drawRect = getDrawRect();
+        if (drawRect.contains(pos->x, pos->y)) {
+            // 鼠标在菜单栏内，检查是否在某个主菜单上
+            for (auto& menu : m_menus) {
+                SRect menuRect = menu->getDrawRect();
+                if (menuRect.contains(pos->x, pos->y)) {
+                    // 鼠标在某个主菜单上
+                    if (m_activeMenu != menu) {
+                        // 切换到新的活动菜单
+                        if (m_activeMenu) {
+                            m_activeMenu->hideSubMenu();
+                        }
+                        m_activeMenu = menu;
+                        menu->showSubMenu(nullptr);
+                    }
+                    break;
+                }
+            }
+        } else {
+            // 鼠标不在菜单栏内，检查是否在活动菜单的子菜单内
+            if (m_activeMenu && m_activeMenu->isSubMenuVisible()) {
+                SRect subMenuRect = m_activeMenu->getSubMenuPanel()->getDrawRect();
+                if (!subMenuRect.contains(pos->x, pos->y)) {
+                    // 鼠标不在活动菜单的子菜单内，关闭所有菜单
+                    m_activeMenu->hideSubMenu();
+                    m_activeMenu = nullptr;
+                }
+            }
+        }
+    }
 
     return ControlImpl::handleEvent(event);
 }

@@ -62,6 +62,7 @@ public:
     void setLuotiAni(shared_ptr<LuotiAni>luotiAni);
     void setOnClick(OnClickHandler onClick);
     void setTransparent(bool isTransparent);
+    void setState(ButtonState state);
 };
 
 class ButtonBuilder {

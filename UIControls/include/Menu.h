@@ -95,7 +95,9 @@ public:
     void addMenuItem(shared_ptr<MenuItem> menuItem);
     void removeMenuItem(shared_ptr<MenuItem> menuItem);
     void showSubMenu(shared_ptr<Button> menu);
+    void hideSubMenu(void);
     bool isSubMenuVisible(void);
+    shared_ptr<Panel> getSubMenuPanel(void);
 
 private:
     float m_maxSubMenuWidth;
