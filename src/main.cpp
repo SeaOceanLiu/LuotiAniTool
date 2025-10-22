@@ -30,9 +30,14 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         return SDL_APP_FAILURE;
     }
 
-    // MainWindow::getInstance()必须在SDL_Init之后，TTF_Init之前调用
+    if (!TTF_Init()) {
+        SDL_Log("Couldn't initialise SDL_ttf: %s\n", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+
+    // MainWindow::getInstance()必须在SDL_Init之后//，TTF_Init之前调用
     SSize displaySize = MAINWIN->getDisplaySize();
-    BENCH->initial();    // 初始化Bench单例，创建Bench工作台，Todo: 从配置文件中读取窗体配置
+    BENCH;    // 初始化Bench单例，创建Bench工作台，Todo: 从配置文件中读取窗体配置
 
     DEBUG_STREAM << "SDL3 Resizable Window Example" << std::endl;
     DEBUG_STREAM << "Instructions:" << std::endl;
@@ -153,6 +158,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
 /* This function runs once per frame, and is the heart of the program. */
 SDL_AppResult SDL_AppIterate(void *appstate)
 {
+    BENCH->eventLoopEntry();
     BENCH->update();
 
     /* clear the window to the draw color. */
@@ -170,6 +176,10 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
     // Clean up resources
-    // TTF_Quit();
+    // 这里要强制释放资源，因为要确保在后面调用TTF_Quit()之前，要把FontSuite打开的字体都关闭掉
+    // BENCH.reset();
+    // 线程需要显式detach，否则Android下会报泄漏
+    ResourceLoader::getInstance()->detachLoadingThread();
+    TTF_Quit();
     /* SDL will clean up the window/renderer for us. */
 }

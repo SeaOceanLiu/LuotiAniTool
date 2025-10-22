@@ -1,7 +1,10 @@
-#ifndef ConstDefH
+﻿#ifndef ConstDefH
 #define ConstDefH
 
 #include <filesystem>
+
+// using namespace std; // 先不使用 using namespace std，避免在Windows下编译因命名冲突而失败
+namespace fs = std::filesystem;
 
 // 前向声明
 struct SDL_Color;
@@ -36,14 +39,32 @@ struct SDL_Color;
 class ConstDef {
 public:
     // 路径定义
-    static const std::filesystem::path workforldPath;  // 工作目录路径
-    static const std::filesystem::path pathPrefix;     // 资源路径前缀
+    static const fs::path workforldPath;  // 工作目录路径
+    static const fs::path pathPrefix;     // 资源路径前缀
 
     // 按钮相关常量
     static const float BUTTON_CAPTION_SIZE;
     static const SDL_Color BUTTON_NORMAL_COLOR;
     static const SDL_Color BUTTON_HOVER_COLOR;
     static const SDL_Color BUTTON_DOWN_COLOR;
+
+    static const SDL_Color BUTTON_NORMAL_TEXT_COLOR;
+    static const SDL_Color BUTTON_HOVER_TEXT_COLOR;
+    static const SDL_Color BUTTON_DOWN_TEXT_COLOR;
+
+    // 菜单相关常量
+    static const float MENU_BAR_HEIGHT;
+    static const SDL_Color MENU_BORDER_COLOR;
+    static const SDL_Color MENU_NORMAL_COLOR;
+    static const SDL_Color MENU_HOVER_COLOR;
+    static const SDL_Color MENU_DOWN_COLOR;
+    static const SDL_Color MENU_TEXT_NORMAL_COLOR;
+    static const SDL_Color MENU_TEXT_HOVER_COLOR;
+    static const SDL_Color MENU_TEXT_DOWN_COLOR;
+    static const float MENU_MAIN_MENU_HEIGHT;
+    static const float MENU_TEXT_SIZE;
+
+    static const float MENU_CAPTION_MARGIN;
 
     // 窗口相关常量
     static const float WINDOW_TITLE_HEIGHT;

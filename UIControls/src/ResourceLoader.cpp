@@ -146,10 +146,6 @@ shared_ptr<Resource> ResourceLoader::getResource(string& resourceId){
 void ResourceLoader::loadConfigFile(fs::path configPath){
     SDL_Log("Open config file: %s", configPath.string().c_str());
 
-    return;
-
-
-
     // 将资源版本号初始化为空，避免打开文件失败时获得早前的资源版本号
     m_resourceVersion = "";
     SDL_IOStream *jsonFIleStream = SDL_IOFromFile(configPath.string().c_str(), "r");
@@ -180,23 +176,24 @@ void ResourceLoader::loadConfigFile(fs::path configPath){
 }
 
 void ResourceLoader::loadConfig(void){
-    loadConfigFile(std::filesystem::path(".") / ResourceLoader::RT_CONFIG / "config.jsonc");
+    loadConfigFile(ConstDef::workforldPath / ResourceLoader::RT_CONFIG / "config.jsonc");
     // string currentResourceVersion = "";
     string currentResourceVersion = m_resourceVersion;
     SDL_Log("currentResourceVersion: %s", currentResourceVersion.c_str());
 
-    loadConfigFile(std::filesystem::path(".") / ResourceLoader::RT_CONFIG / "config.jsonc");
+    loadConfigFile(ConstDef::pathPrefix / ResourceLoader::RT_CONFIG / "config.jsonc");
     string targetResourceVersion = m_resourceVersion;
     SDL_Log("targetResourceVersion: %s", targetResourceVersion.c_str());
     if (currentResourceVersion != targetResourceVersion){
         SDL_Log("!!!!!!!!!!!!!!!!!!!!Resource version changed, need to overwrite resource!!!!!!!!!!!!!!!!!!!!");
 
         // 将新的config.jsonc文件保存到工作目录
-        if(!SDL_CreateDirectory((std::filesystem::path(".") / ResourceLoader::RT_CONFIG).string().c_str())){
+        if(!SDL_CreateDirectory((ConstDef::workforldPath / ResourceLoader::RT_CONFIG).string().c_str())){
             SDL_Log("Create config directory error: %s", SDL_GetError());
-            throw "Create config directory error";
+            // throw "Create config directory error";
+            return;
         }
-        if(!SDL_SaveFile((std::filesystem::path(".") / ResourceLoader::RT_CONFIG / "config.jsonc").string().c_str(),
+        if(!SDL_SaveFile((ConstDef::workforldPath / ResourceLoader::RT_CONFIG / "config.jsonc").string().c_str(),
             (void *)m_pJsonFileContent.get(),
             m_jsonFileSize)){
 
@@ -215,6 +212,7 @@ void ResourceLoader::loadConfig(void){
         m_resourceLoadingPath = ConstDef::workforldPath;
     }
 
+    SDL_Log("Resource loading path: %s", m_resourceLoadingPath.string().c_str());
     // 获得方块配置文件路径
     string def = m_jsonObject["blockDefine"].get<string>();
     m_resourceMap[def] = make_shared<Resource>(ResourceLoader::RT_CONFIG, 0, nullptr);
@@ -244,6 +242,7 @@ void ResourceLoader::loadConfig(void){
 }
 
 void ResourceLoader::getResourcePath(json jsonBLockGroup, string resourceType){
+    SDL_Log("Get resource path: %s", resourceType.c_str());
     for(auto& resourceItem : jsonBLockGroup[resourceType]){
         if(!resourceItem.is_string()) {
             SDL_Log("font '%s' item in config file is not string", resourceItem.items().begin().key().c_str());
@@ -341,123 +340,13 @@ void ResourceLoader::saveAllResourceToPrefPath(void){
         }
         saveResourceToPrefPath(kv.first);
     }
-    // // 方块配置
-    // saveResourceToPrefPath(ResourceLoader::RID_RBlock_jsonc);
-    // // 字体
-    // saveResourceToPrefPath(ResourceLoader::RID_Asul_Bold_ttf);
-    // saveResourceToPrefPath(ResourceLoader::RID_HarmonyOS_Sans_SC_Regular_ttf);
-    // saveResourceToPrefPath(ResourceLoader::RID_HarmonyOS_Sans_SC_Thin_ttf);
-    // saveResourceToPrefPath(ResourceLoader::RID_MapleMono_NF_CN_Regular_ttf);
-    // saveResourceToPrefPath(ResourceLoader::RID_Muyao_Softbrush_ttf);
-    // saveResourceToPrefPath(ResourceLoader::RID_Quando_Regular_ttf);
-    // // 图片
-    // saveResourceToPrefPath(ResourceLoader::RID_bitmap1_bmp);
-    // saveResourceToPrefPath(ResourceLoader::RID_bitmap2_bmp);
-    // saveResourceToPrefPath(ResourceLoader::RID_bitmap3_bmp);
-    // saveResourceToPrefPath(ResourceLoader::RID_bitmap4_bmp);
-    // saveResourceToPrefPath(ResourceLoader::RID_bitmap5_bmp);
-    // saveResourceToPrefPath(ResourceLoader::RID_bitmap6_bmp);
-    // saveResourceToPrefPath(ResourceLoader::RID_bitmap7_bmp);
-    // saveResourceToPrefPath(ResourceLoader::RID_bitmap8_bmp);
-    // saveResourceToPrefPath(ResourceLoader::RID_bitmap9_bmp);
-    // saveResourceToPrefPath(ResourceLoader::RID_cross_down_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_cross_over_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_cross_up_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_down_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_down_hover_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_down_pressed_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_icon_ico);
-    // saveResourceToPrefPath(ResourceLoader::RID_icon_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_left_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_left_hover_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_left_pressed_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_pause_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_play_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rblock_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_right_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_right_hover_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_right_pressed_png);
-    // // 背景
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE00_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE01_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE02_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE03_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE04_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE05_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE06_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE07_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE08_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE09_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE10_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE11_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE12_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE13_jpg);
-    // saveResourceToPrefPath(ResourceLoader::RID_BACKGROUND_IMAGE14_jpg);
-    // // 旋转动画
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate000_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate005_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate010_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate015_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate020_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate025_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate030_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate035_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate040_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate045_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate050_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate055_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate060_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate065_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate070_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate075_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate080_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate085_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate090_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate095_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate100_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate105_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate110_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate115_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate120_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate125_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate130_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate135_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate140_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate145_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate150_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate155_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate160_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate165_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate170_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate175_png);
-    // saveResourceToPrefPath(ResourceLoader::RID_rotate180_png);
-    // // 背景音乐
-    // saveResourceToPrefPath(ResourceLoader::RID_3_am_West_End_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Beat_One_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Fright_Night_Twist_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Goodnightmare_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Palm_and_Soul_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Take_the_Ride_wav);
-    // // 音效
-    // saveResourceToPrefPath(ResourceLoader::RID_Bomb_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_BombExplode_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_CantDo_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Excellent_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_GameOver_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Go_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Good_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_LevelComplete_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Move_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_MultiShot_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Pierce_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Save_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Speedup_wav);
-    // saveResourceToPrefPath(ResourceLoader::RID_Warning_wav);
 }
 
 SDL_IOStream * ResourceLoader::openTempSavedFile(char mode){
     if (mode != 'r' && mode != 'w') {
-        throw "ResourceLoader::openSavedFile: Invalid mode";
+        SDL_Log("Invalid mode: %c", mode);
+        // throw "ResourceLoader::openSavedFile: Invalid mode";
+        return nullptr;
     }
     fs::path tempSavedFilePath = ConstDef::workforldPath / ResourceLoader::RID_tempSaved_jsonc;
     SDL_Log("Open temp saved file: %s", tempSavedFilePath.string().c_str());

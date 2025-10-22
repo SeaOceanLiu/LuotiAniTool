@@ -35,7 +35,8 @@ private:
         // 创建SDL3窗口和渲染器
         if (!SDL_CreateWindowAndRenderer(APP_NAME, INITIAL_WIDTH, INITIAL_HEIGHT, WINDOW_FLAG, &m_window, &m_renderer)) {
             SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
-            throw ("Couldn't create window/renderer");
+            // throw ("Couldn't create window/renderer");
+            return;
         }
 
         //设置窗口位置
@@ -52,13 +53,15 @@ private:
         SDL_DisplayID m_displayId = SDL_GetPrimaryDisplay();
         if (m_displayId == 0) {
             SDL_Log("SDL_GetPrimaryDisplay Error: %s\n", SDL_GetError());
-            throw ("SDL_GetPrimaryDisplay Error");
+            // throw ("SDL_GetPrimaryDisplay Error");
+            return;
         }
 
         const SDL_DisplayMode *displayMode = SDL_GetCurrentDisplayMode(m_displayId);
         if (displayMode == nullptr) {
             SDL_Log("SDL_GetCurrentDisplayMode Error: %s\n", SDL_GetError());
-            throw ("SDL_GetCurrentDisplayMode Error");
+            // throw ("SDL_GetCurrentDisplayMode Error");
+            return;
         }
         m_displayWidth = (float)displayMode->w * displayMode->pixel_density;
         m_displayHeight = (float)displayMode->h * displayMode->pixel_density;

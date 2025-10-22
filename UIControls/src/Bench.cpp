@@ -7,6 +7,9 @@ void Bench::initial(void){
 
     m_isInitialed = true;
     SDL_Log("Loading finished, waiting user starting game................................");
+    if (m_onInitial != nullptr){
+        m_onInitial();
+    }
 }
 
 Bench::Bench(Control *parent, SRect rect, SDL_Renderer *renderer, float xScale, float yScale):
@@ -16,28 +19,30 @@ Bench::Bench(Control *parent, SRect rect, SDL_Renderer *renderer, float xScale, 
     m_isInitialed(false),
     m_nextTick(0),
     m_nextRepeatTick(0),
-    m_isExiting(SDL_APP_CONTINUE)
+    m_isExiting(SDL_APP_CONTINUE),
+    m_onInitial(nullptr)
 {
     setRenderer(renderer);
     setTransparent(true);
 
     SDL_Log("Loading resources.....................................");
     // 将资源加载到内存中
-    // ResourceLoader::getInstance()->loadConfig();
+    ResourceLoader::getInstance()->loadConfig();
 }
 
 void Bench::inputControl(shared_ptr<Event> event) {
-    if (m_eventJitter.find(event->m_eventName) != m_eventJitter.end()){
-        if (SDL_GetTicks() < m_eventJitter[event->m_eventName]){
-            return;
-        }
-        m_eventJitter[event->m_eventName] = SDL_GetTicks() + DEFAULT_BTN_MS_INTERVAL;
-    }
+    // if (m_eventJitter.find(event->m_eventName) != m_eventJitter.end()){
+    //     if (SDL_GetTicks() < m_eventJitter[event->m_eventName]){
+    //         SDL_Log("Event %d is jittering", event->m_eventName);
+    //         return;
+    //     }
+    //     m_eventJitter[event->m_eventName] = SDL_GetTicks() + DEFAULT_BTN_MS_INTERVAL;
+    // }
 
-    if(EventQueue::isPositionEvent(event->m_eventName)){
-        m_lastAction = event;
-        m_nextTick = SDL_GetTicks() + DEFAULT_BTN_MS_INTERVAL;
-    }
+    // if(EventQueue::isPositionEvent(event->m_eventName)){
+    //     m_lastAction = event;
+    //     m_nextTick = SDL_GetTicks() + DEFAULT_BTN_MS_INTERVAL;
+    // }
 
     triggerEvent(event);
 }
@@ -64,14 +69,40 @@ void Bench::repeatTrigger(void){
     }
 }
 void Bench::update() {
-    if (!m_enable) return;
-
-    if (m_lastAction != nullptr){
-        repeatTrigger();
+    if (m_isLoading){
+        if(ResourceLoader::getInstance()->getLoadingProgress() == 1.0f){
+            ResourceLoader::getInstance()->detachLoadingThread();
+            m_isLoading = false;
+            initial();
+        }
+    }else {
+        if (m_lastAction != nullptr){
+            repeatTrigger();
+        }
+        Panel::update();
     }
-    Panel::update();
 }
 void Bench::draw(void){
+    if(m_isLoading){
+        SRect rect = {0, m_rect.height / 2 - 50, m_rect.width, 100};
+        SRect percentRect = {0, m_rect.height / 2 - 50, m_rect.width * ResourceLoader::getInstance()->getLoadingProgress(), 100};
+
+        // 使用橙色（orange）画进度
+        if(!SDL_SetRenderDrawColor(getRenderer(), 255, 165, 0, SDL_ALPHA_OPAQUE)){
+            SDL_Log("Failed to set grid render color: %s", SDL_GetError());
+        }
+        if (!SDL_RenderFillRect(getRenderer(), percentRect.toSDLFRect())){
+            SDL_Log("Failed to fill render rect: %s", SDL_GetError());
+        }
+        // 使用灰色（gray）画进度条外框
+        if(!SDL_SetRenderDrawColor(getRenderer(), 128, 128, 128, SDL_ALPHA_OPAQUE)){
+            SDL_Log("Failed to set grid render color: %s", SDL_GetError());
+        }
+        if (!SDL_RenderRect(getRenderer(), rect.toSDLFRect())){
+            SDL_Log("Failed to fill render rect: %s", SDL_GetError());
+        }
+    }
+
     if (!m_visible) return;
     // 绘制子控件
     Panel::draw();
@@ -83,6 +114,13 @@ SDL_AppResult Bench::isExiting(void) {
     return m_isExiting;
 }
 
+void Bench::setOnInitial(OnInitialHandler handler) {
+    if (m_isInitialed) {
+        handler();
+    } else {
+        m_onInitial = handler;
+    }
+}
 
 // Draw a centered rectangle
 void Bench::drawCenteredRectangle(SDL_Renderer* renderer, int windowWidth, int windowHeight) {

@@ -77,7 +77,7 @@ if errorlevel 1 (
 
 :: 编译项目
 if "%COMPILER%"=="MSVC" (
-    msbuild LuotiAniTool.sln /p:Configuration=%CONFIGURATION% /m
+        %CONFIGURATION% /m
 ) else (
     mingw32-make -j%NUMBER_OF_PROCESSORS%
 )

@@ -74,7 +74,7 @@ void Label::loadFromFile(void){
     m_font = TTF_OpenFont(fullPath.string().c_str(), m_fontSize * getScaleXX());
     if (m_font == nullptr) {
         SDL_Log("Failed to load font: %s", SDL_GetError());
-        throw "Failed to load font: %s", SDL_GetError();
+        // throw "Failed to load font: %s", SDL_GetError();
         return;
     }
 
@@ -97,7 +97,7 @@ void Label::loadFromResource(string resourceId){
     m_font = TTF_OpenFontIO(resourceStream, true, m_fontSize * getScaleXX());
     if (m_font == nullptr) {
         SDL_Log("Failed to load font: %s", SDL_GetError());
-        throw "Failed to load font: %s", SDL_GetError();
+        // throw "Failed to load font: %s", SDL_GetError();
         return;
     }
 
@@ -204,6 +204,12 @@ bool Label::handleEvent(shared_ptr<Event> event){
     return false;
 }
 
+void Label::setRect(SRect rect){
+    ControlImpl::setRect(rect);
+
+    // 重新计算对齐位置
+    setAlignmentMode(m_AlignmentMode);
+}
 SRect Label::getHotRect(void) const{
     return m_hotRect;
 }
@@ -228,19 +234,19 @@ void Label::setCaption(string caption){
         m_ttfText = TTF_CreateText(m_textEngin, m_font, caption.c_str(), caption.length());
         if (m_ttfText == nullptr) {
             SDL_Log("Failed to create static text: %s", SDL_GetError());
-            throw "Failed to create static text: %s", SDL_GetError();
+            // throw "Failed to create static text: %s", SDL_GetError();
         }
     } else {
         if(!TTF_SetTextString(m_ttfText, caption.c_str(), caption.length())) {
             SDL_Log("Failed to set text string: %s", SDL_GetError());
-            throw "Failed to set text string: %s", SDL_GetError();
+            // throw "Failed to set text string: %s", SDL_GetError();
         }
     }
 
     int width, height;
     if (!TTF_GetTextSize(m_ttfText, &width, &height)){
         SDL_Log("Failed to get text size: %s", SDL_GetError());
-        throw "Failed to get text size: %s", SDL_GetError();
+        // throw "Failed to get text size: %s", SDL_GetError();
     }
     m_textSize = {static_cast<float>(width / getScaleXX()), static_cast<float>(height / getScaleYY())};  // 除以倍率获得原始大小，后续用来计算对齐时才能正确计算;
 
@@ -287,6 +293,9 @@ void Label::setAlignmentMode(AlignmentMode Alignment){
     }
     m_hotRect = {m_translatedPos.x, m_translatedPos.y, m_textSize.width, m_textSize.height};
 }
+AlignmentMode Label::getAlignmentMode(void) const{
+    return m_AlignmentMode;
+}
 void Label::setFontSize(int fontSize){
     if (fontSize == m_fontSize) return;
     m_fontSize = fontSize;
@@ -294,7 +303,7 @@ void Label::setFontSize(int fontSize){
     if (m_font == nullptr) return;
     if(!TTF_SetFontSize(m_font, fontSize * getScaleXX())) {
         SDL_Log("Failed to set font size: %s", SDL_GetError());
-        throw "Failed to set font size: %s", SDL_GetError();
+        // throw "Failed to set font size: %s", SDL_GetError();
         return;
     }
 

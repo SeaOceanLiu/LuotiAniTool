@@ -13,6 +13,7 @@ add_library(UIControls
     src/Material.cpp
     src/Panel.cpp
     src/ResourceLoader.cpp
+    src/Menu.cpp
 )
 
 # 设置UIControls库的包含目录

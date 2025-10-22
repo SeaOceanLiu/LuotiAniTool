@@ -1,0 +1,117 @@
+{
+    // 资源版本号或SHA256值
+    "resourceVersion": "1.2.0",
+
+    // 方块配置
+    "blockDefine": "config/RBlock.jsonc",
+
+    // 字体
+    "fonts": [
+        "fonts/Asul-Bold.ttf",
+        "fonts/HarmonyOS_Sans_SC_Regular.ttf",
+        "fonts/HarmonyOS_Sans_SC_Thin.ttf",
+        "fonts/MapleMono-NF-CN-Regular.ttf",
+        "fonts/Muyao-Softbrush.ttf",
+        "fonts/Quando-Regular.ttf"
+    ],
+
+    // 图片
+    "images": [
+        "images/cross_down.png",
+        "images/cross_over.png",
+        "images/cross_up.png",
+        "images/down.png",
+        "images/down_hover.png",
+        "images/down_pressed.png",
+        "images/icon.ico",
+        "images/icon.png",
+        "images/left.png",
+        "images/left_hover.png",
+        "images/left_pressed.png",
+        "images/pause.png",
+        "images/play.png",
+        "images/rblock.png",
+        "images/right.png",
+        "images/right_hover.png",
+        "images/right_pressed.png"
+    ],
+
+    // 背景
+    "background": [
+        "background/2022_1204_15565500_mh1670141573251.jpg",
+        "background/IMG_20200903_202237.jpg",
+        "background/IMG_20200920_100257.jpg",
+        "background/IMG_20200920_100819.jpg",
+        "background/IMG_20201002_184914.jpg",
+        "background/IMG_20201003_201713.jpg",
+        "background/IMG_20201004_084644.jpg",
+        "background/IMG_20201004_084801.jpg",
+        "background/IMG_20201004_085622.jpg",
+        "background/IMG_20201004_183444.jpg",
+        "background/IMG_20201018_145828.jpg",
+        "background/IMG_20201025_180928.jpg",
+        "background/mmexport1599240022745.jpg",
+        "background/mmexport1599449092788.jpg",
+        "background/mmexport1599449096347.jpg"
+    ],
+
+    // 动画
+    "animations": [
+        // 动画配置文件
+        "animations/rotateBtn/rotateBtn.jsonc",
+        "animations/bombBlock/bombBlock.jsonc",
+        "animations/pierceBlock/pierceBlock.jsonc",
+        "animations/cyanBlock/cyanBlock.jsonc",
+        "animations/darkGreenBlock/darkGreenBlock.jsonc",
+        "animations/deepBlueBlock/deepBlueBlock.jsonc",
+        "animations/greenBlock/greenBlock.jsonc",
+        "animations/purpleBlock/purpleBlock.jsonc",
+        "animations/redBlock/redBlock.jsonc",
+        "animations/grayBlock/grayBlock.jsonc",
+        "animations/yellowBlock/yellowBlock.jsonc",
+
+        // 动画元素文件
+        "animations/rotateBtn/rotateBtn.svg",
+        "animations/bombBlock/bomb.svg",
+        "animations/bombBlock/marker.svg",
+        "animations/grayBlock/grayBlock.svg",
+        "animations/pierceBlock/chisel.svg",
+        "animations/cyanBlock/cyanBlock.svg",
+        "animations/darkGreenBlock/darkGreenBlock.svg",
+        "animations/deepBlueBlock/deepBlueBlock.svg",
+        "animations/greenBlock/greenBlock.svg",
+        "animations/purpleBlock/purpleBlock.svg",
+        "animations/redBlock/redBlock.svg",
+        "animations/yellowBlock/yellowBlock.svg",
+
+        "animations/lightBand/lightBand.svg"
+    ],
+
+    // 背景音乐
+    "music": [
+        "music/3 am West End.wav",
+        "music/Beat One.wav",
+        "music/Fright Night Twist.wav",
+        "music/Goodnightmare.wav",
+        "music/Palm and Soul.wav",
+        "music/Take the Ride.wav"
+    ],
+
+    // 音效
+    "sounds": [
+        "sounds/Bomb.wav",
+        "sounds/BombExplode.wav",
+        "sounds/CantDo.wav",
+        "sounds/Excellent.wav",
+        "sounds/GameOver.wav",
+        "sounds/Go.wav",
+        "sounds/Good.wav",
+        "sounds/LevelComplete.wav",
+        "sounds/Move.wav",
+        "sounds/MultiShot.wav",
+        "sounds/Pierce.wav",
+        "sounds/Save.wav",
+        "sounds/Speedup.wav",
+        "sounds/Warning.wav"
+    ]
+}

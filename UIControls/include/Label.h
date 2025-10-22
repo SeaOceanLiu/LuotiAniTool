@@ -67,10 +67,10 @@ private:
 public:
     Label(Control *parent, SRect rect, float xScale=1.0f, float yScale=1.0f);
     ~Label(void);
-    void update(void);
-    void draw(void);
-    bool handleEvent(shared_ptr<Event> event);
-    // int getId(void) const;
+    void update(void) override;
+    void draw(void) override;
+    bool handleEvent(shared_ptr<Event> event) override;
+    void setRect(SRect rect) override;
     SRect getHotRect(void) const;
 
     void setNormalStateColor(SDL_Color color);
@@ -79,6 +79,7 @@ public:
     void setCaption(string caption);
     void setFont(FontName fontName);
     void setAlignmentMode(AlignmentMode Alignment);
+    AlignmentMode getAlignmentMode(void) const;
     void setFontSize(int fontSize);
     void setShadow(bool enabled);
     void setShadowColor(SDL_Color color);

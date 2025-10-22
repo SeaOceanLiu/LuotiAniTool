@@ -11,6 +11,7 @@
 
 class Bench: public Panel, public TopControl
 {
+    using OnInitialHandler = std::function<void (void)>;
 private:
     bool m_isLoading;
     bool m_isInitialed;
@@ -25,6 +26,7 @@ private:
     uint64_t m_nextRepeatTick;
     shared_ptr<Event> m_lastAction;
     SDL_AppResult m_isExiting;
+    OnInitialHandler m_onInitial;
 
     Bench(Control *parent, SRect rect, SDL_Renderer *renderer, float xScale=1.0f, float yScale=1.0f);
 
@@ -39,6 +41,8 @@ public:
     void draw(void) override;
     void update(void) override;
     SDL_AppResult isExiting(void);
+
+    void setOnInitial(OnInitialHandler handler);
 
     void drawCenteredRectangle(SDL_Renderer* renderer, int windowWidth, int windowHeight);
 };

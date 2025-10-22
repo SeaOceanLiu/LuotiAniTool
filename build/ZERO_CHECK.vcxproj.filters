@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\GitSpace\LuotiAniTool\build\CMakeFiles\f1062ec41ac4b595cc6965f0191fdec2\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{68B72A6A-18A3-38B3-ABB2-5CCFA32565FA}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

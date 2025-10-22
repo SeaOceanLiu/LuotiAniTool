@@ -1,4 +1,4 @@
-#include "ControlBase.h"
+﻿#include "ControlBase.h"
 ControlImpl::ControlImpl(Control *parent, float xScale, float yScale):
     // m_weakThis(this),
     // m_sharedThis(nullptr),
@@ -166,6 +166,10 @@ void ControlImpl::show(void){
 
 void ControlImpl::hide(void){
     m_visible = false;
+}
+
+bool ControlImpl::getVisible(void){
+    return m_visible;
 }
 
 void ControlImpl::setEnable(bool enable){

@@ -1,4 +1,4 @@
-#ifndef ControlBaseH
+﻿#ifndef ControlBaseH
 #define ControlBaseH
 #include <memory>
 #include <vector>
@@ -35,6 +35,7 @@ public:
     virtual void setScaleY(float yScale=1.0f) = 0;
     virtual void show(void) = 0;
     virtual void hide(void) = 0;
+    virtual bool getVisible(void) = 0;
     virtual void setEnable(bool enable) = 0;
     virtual bool getEnable(void) = 0;
     virtual SDL_Renderer *getRenderer(void) = 0;
@@ -85,6 +86,7 @@ public:
     SRect getRect(void) override;
     void show(void) override;
     void hide(void) override;
+    bool getVisible(void) override;
     void setEnable(bool enable) override;
     bool getEnable(void) override;
     SDL_Renderer *getRenderer(void) override;
